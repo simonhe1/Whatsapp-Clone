@@ -8,7 +8,7 @@ import {
 import React, { useState, useEffect } from "react";
 import "./Chat.css";
 import MicIcon from "@material-ui/icons/Mic";
-import axios from "./axios";
+// import axios from "./axios";
 import { useParams } from "react-router-dom";
 import db from "./firebase";
 import { useStateValue } from "./StateProvider";
@@ -19,6 +19,7 @@ const Chat = () => {
   const [input, setInput] = useState([]);
   const [roomName, setRoomName] = useState("");
   const [messages, setMessages] = useState([]);
+  const [seed, setSeed] = useState("");
   const { roomId } = useParams();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const Chat = () => {
       db.collection("rooms")
         .doc(roomId)
         .onSnapshot((snapshot) => {
-          setRoomName(snapshot.data().name);
+          setRoomName(snapshot.data()?.name);
         });
 
       db.collection("rooms")
@@ -36,6 +37,13 @@ const Chat = () => {
         .onSnapshot((snapshot) =>
           setMessages(snapshot.docs.map((doc) => doc.data()))
         );
+
+      db.collection("rooms")
+        .doc(roomId)
+        .onSnapshot((snapshot) => {
+          const { pictureSeed } = snapshot.data();
+          setSeed(pictureSeed);
+        });
     }
   }, [roomId]);
 
@@ -51,6 +59,8 @@ const Chat = () => {
     db.collection("rooms").doc(roomId).collection("messages").add({
       message: input,
       name: user.displayName,
+      id: user.uid,
+      picture: user.photoURL,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
@@ -60,11 +70,20 @@ const Chat = () => {
   return (
     <div className="chat">
       <div className="chat_header">
-        <Avatar src={user?.photoURL} />
+        <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
 
         <div className="chat_header_info">
           <h3>{roomName}</h3>
-          <p>Last seen at...</p>
+          {messages.length !== 0 ? (
+            <p>
+              Last seen{" "}
+              {new Date(
+                messages[messages.length - 1]?.timestamp?.toDate()
+              ).toUTCString()}
+            </p>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div className="chat_header_right">
@@ -82,15 +101,20 @@ const Chat = () => {
 
       <div className="chat_body">
         {messages.map((message) => (
-          <p
-            className={`chat_body_message ${
-              message.received && "chat_body_receiver"
+          <div
+            className={`chat_body_message_container ${
+              message.id === user.uid && "chat_body_sender"
             }`}
           >
-            <span className="chat_body_name">{message.name}</span>
-            {message.message}
-            <span className="chat_body_timestamp">{message.timestamp}</span>
-          </p>
+            <Avatar src={user?.photoURL} className={`chat_body_image`} />
+            <p className={`chat_body_message`}>
+              <span className="chat_body_name">{message.name}</span>
+              {message.message}
+              <span className="chat_body_timestamp">
+                {new Date(message.timestamp?.toDate()).toUTCString()}
+              </span>
+            </p>
+          </div>
         ))}
       </div>
 

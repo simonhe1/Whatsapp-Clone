@@ -11,6 +11,12 @@
   border-right: 1px solid lightgray;
 }
 
+.sidebar_header_username {
+  flex: 0.6;
+  font-size: 32px;
+  font-weight: 600;
+}
+
 .sidebar_header_right {
   display: flex;
   align-items: center;
@@ -55,4 +61,8 @@
   flex: 1;
   background-color: white;
   overflow: scroll;
+}
+
+.sidebar_chats::-webkit-scrollbar {
+  display: none;
 }

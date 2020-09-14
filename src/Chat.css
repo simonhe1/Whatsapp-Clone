@@ -34,7 +34,15 @@
   overflow: scroll;
 }
 
+.chat_body::-webkit-scrollbar {
+  display: none;
+}
+
 .chat_body_message {
+  position: relative;
+}
+
+.chat_body_message_container {
   position: relative;
   font-size: 16px;
   padding: 10px;
@@ -47,11 +55,12 @@
 .chat_body_name {
   position: absolute;
   top: -15px;
+  left: 45px;
   font-weight: 800;
   font-size: xx-small;
 }
 
-.chat_body_receiver {
+.chat_body_sender {
   margin-left: auto;
   background-color: #dcf8c6;
 }
@@ -78,7 +87,7 @@
   outline-width: 0;
   flex: 1;
   border-radius: 30px;
-  padding: 10px;
+  padding: 10px 10px 10px 20px;
   border: none;
 }
 
