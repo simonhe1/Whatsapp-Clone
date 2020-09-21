@@ -20,9 +20,52 @@
   margin-bottom: 40px;
 }
 
-.login_container > button {
+.login_container > form > h5 {
+  margin-bottom: 5px;
+}
+
+.login_container > form > input {
+  height: 30px;
+  margin-bottom: 10px;
+  background-color: white;
+  width: 98%;
+}
+
+.login_register_email_and_pass_button {
+  color: white;
+  background-color: #0a8d48;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-color: darkgray;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.login_register_email_and_pass_button:hover,
+.login_sign_in_button:hover {
+  cursor: pointer;
+}
+
+.login_register_google_button {
   margin-top: 50px;
   text-transform: inherit !important;
   background-color: #0a8d48 !important;
   color: white;
+}
+
+.login_sign_in_button {
+  color: white;
+  background-color: #0a8d48;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid;
+  margin-top: 10px;
+  border-color: #a88734 #9c7e31 #846a29;
+  font-size: 15px;
+  font-weight: 600;
 }
