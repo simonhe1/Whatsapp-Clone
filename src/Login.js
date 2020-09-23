@@ -5,6 +5,7 @@ import { auth, provider } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./reducer";
 import { useHistory } from "react-router-dom";
+import { Facebook } from "@material-ui/icons";
 
 const Login = () => {
   const [{}, dispatch] = useStateValue();
@@ -62,7 +63,7 @@ const Login = () => {
         <div className="login_text">
           <h1>Sign in to WhatsApp</h1>
         </div>
-        <form>
+        <form className="login_container_form">
           <h5>Email</h5>
           <input
             type="text"
@@ -77,28 +78,42 @@ const Login = () => {
             value={password}
           />
 
+          <h5 className="login_forgot_password_text">Forgot password?</h5>
           <button
             type="submit"
             className="login_sign_in_button"
             onClick={signInWithEmailAndPassword}
           >
-            Sign In
+            Login
           </button>
         </form>
 
-        <button
-          className="login_register_email_and_pass_button"
-          onClick={register}
-        >
-          Create your Whatsapp Account
-        </button>
+        <div className="login_divider">
+          <hr className="login_divider_bar" />
+          <div className="login_divider_text">Or login with</div>
+          <hr className="login_divider_bar" />
+        </div>
 
-        <Button
-          onClick={signInWithGoogle}
-          className="login_register_google_button"
-        >
-          Sign In With Google
-        </Button>
+        <div className="login_third_party_container">
+          <Button className="login_facebook">
+            <Facebook color="primary" />
+          </Button>
+          <Button onClick={signInWithGoogle} className="login_google">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1024px-Google_%22G%22_Logo.svg.png"
+              alt="Google Logo"
+              className="login_google_icon"
+            />
+          </Button>
+        </div>
+
+        <div className="login_footer">
+          <h4>New User? </h4>
+          <h4 onClick={register} id="sign_up">
+            {" "}
+            Sign up here
+          </h4>
+        </div>
       </div>
     </div>
   );

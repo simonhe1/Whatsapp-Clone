@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 // import axios from "./axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./Login";
+import Register from "./Register";
 import { useStateValue } from "./StateProvider";
 import { auth } from "./firebase";
 import { actionTypes } from "./reducer";
@@ -13,6 +14,7 @@ import { actionTypes } from "./reducer";
 function App() {
   // const [messages, setMessages] = useState([]);
   const [{ user }, dispatch] = useStateValue();
+  const [accessLoginPage, setAccessLoginPage] = useState(true);
 
   // useEffect(() => {
   //   axios.get("/api/v1/messages/sync").then((response) => {
@@ -62,7 +64,11 @@ function App() {
   return (
     <div className="app">
       {!user ? (
-        <Login />
+        accessLoginPage ? (
+          <Login />
+        ) : (
+          <Register />
+        )
       ) : (
         <div className="app_body">
           <Router>

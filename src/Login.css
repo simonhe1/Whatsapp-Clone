@@ -7,7 +7,7 @@
 }
 
 .login_container {
-  padding: 100px;
+  padding: 50px;
   text-align: center;
   background-color: white;
   border-radius: 10px;
@@ -22,6 +22,7 @@
 
 .login_container > form > h5 {
   margin-bottom: 5px;
+  text-align: left;
 }
 
 .login_container > form > input {
@@ -29,20 +30,79 @@
   margin-bottom: 10px;
   background-color: white;
   width: 98%;
+  border: 0;
+  outline-width: 0;
+  border-bottom: 1px solid black;
+}
+
+.login_divider {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.login_divider_bar {
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.login_divider_text {
+  color: #0a8d48;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.login_facebook {
+  background: #5fcead !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  text-align: center !important;
+  line-height: 100px !important;
+  vertical-align: middle !important;
+  padding: 30px !important;
+}
+.login_footer {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.login_forgot_password_text {
+  text-align: right !important;
+}
+
+.login_google {
+  background: #5fcead !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  text-align: center !important;
+  line-height: 100px !important;
+  vertical-align: middle !important;
+  padding: 30px !important;
+}
+
+.login_google_icon {
+  object-fit: contain;
+  width: 20px;
 }
 
 .login_register_email_and_pass_button {
   color: white;
   background-color: #0a8d48;
-  border-radius: 2px;
+  border-radius: 999px;
   width: 100%;
-  height: 30px;
+  height: 40px;
   border: 1px solid;
   margin-top: 10px;
   margin-bottom: 10px;
   border-color: darkgray;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 800;
 }
 
 .login_register_email_and_pass_button:hover,
@@ -54,18 +114,42 @@
   margin-top: 50px;
   text-transform: inherit !important;
   background-color: #0a8d48 !important;
-  color: white;
+  color: white !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
 }
 
 .login_sign_in_button {
   color: white;
   background-color: #0a8d48;
-  border-radius: 2px;
+  border-radius: 999px;
   width: 100%;
-  height: 30px;
+  height: 40px;
   border: 1px solid;
   margin-top: 10px;
   border-color: #a88734 #9c7e31 #846a29;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.login_text {
+  margin-bottom: 50px;
+}
+
+.login_text:hover {
+  cursor: default;
+}
+
+.login_third_party_container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+#sign_up {
+  color: #0a8d48;
+}
+
+#sign_up:hover {
+  cursor: pointer;
 }
