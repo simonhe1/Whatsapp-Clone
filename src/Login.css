@@ -64,6 +64,7 @@
   line-height: 100px !important;
   vertical-align: middle !important;
   padding: 30px !important;
+  margin-right: 5px !important;
 }
 .login_footer {
   display: flex;
@@ -75,6 +76,11 @@
   text-align: right !important;
 }
 
+.login_forgot_password_text:hover {
+  cursor: pointer;
+  color: #e99d11;
+}
+
 .login_google {
   background: #5fcead !important;
   width: 20px !important;
@@ -84,6 +90,7 @@
   line-height: 100px !important;
   vertical-align: middle !important;
   padding: 30px !important;
+  margin-left: 5px !important;
 }
 
 .login_google_icon {
