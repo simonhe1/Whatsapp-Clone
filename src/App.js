@@ -14,7 +14,7 @@ import { actionTypes } from "./reducer";
 function App() {
   // const [messages, setMessages] = useState([]);
   const [{ user }, dispatch] = useStateValue();
-  const [accessLoginPage, setAccessLoginPage] = useState(true);
+  const [accessLoginPage, setAccessLoginPage] = useState(false);
 
   // useEffect(() => {
   //   axios.get("/api/v1/messages/sync").then((response) => {
