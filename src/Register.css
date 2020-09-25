@@ -1,0 +1,77 @@
+.register {
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+}
+
+.register_container {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.register_container > form > h5 {
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.register_container > form > input {
+  height: 30px;
+  margin-bottom: 10px;
+  background-color: white;
+  width: 98%;
+  border: 0;
+  outline-width: 0;
+  border-bottom: 1px solid black;
+}
+
+.register_footer {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.register_icon_container {
+  display: flex;
+  justify-content: center;
+}
+
+.register_icon_container > .MuiAvatar-root {
+  background-color: #0a8d48;
+  height: 100px;
+  width: 100px;
+  margin-bottom: 5vh;
+}
+
+.register_icon_container > .MuiAvatar-root:hover,
+.register_register_button:hover {
+  cursor: pointer;
+}
+
+.register_register_button {
+  color: white;
+  background-color: #0a8d48;
+  border-radius: 999px;
+  width: 100%;
+  height: 40px;
+  border: 1px solid;
+  margin-top: 10px;
+  border-color: #a88734 #9c7e31 #846a29;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+#login {
+  color: #0a8d48;
+}
+
+#login:hover {
+  cursor: pointer;
+}

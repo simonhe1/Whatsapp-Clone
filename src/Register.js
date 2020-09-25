@@ -6,10 +6,10 @@ import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./reducer";
 import { useHistory } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ switchPage }) => {
   const [{}, dispatch] = useStateValue();
-  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
 
@@ -36,12 +36,22 @@ const Register = () => {
       .catch((err) => console.log(err));
   };
 
+  const switchToLogin = () => {
+    setName("");
+    setEmail("");
+    setPassword("");
+    switchPage(true);
+  };
+
   return (
     <div className="register">
       <div className="register_container">
-        <Avatar src="" alt="user profile pic" />
-        <div className="register_text">
-          <h1>Create your account</h1>
+        <div className="register_icon_container">
+          <Avatar
+            src=""
+            alt="user profile pic"
+            className="register_container_photo"
+          />
         </div>
         <form className="register_container_form">
           <h5>Username</h5>
@@ -65,7 +75,7 @@ const Register = () => {
           />
           <button
             type="submit"
-            className="register_sign_in_button"
+            className="register_register_button"
             onClick={handleRegistration}
           >
             Register
@@ -74,7 +84,10 @@ const Register = () => {
 
         <div className="register_footer">
           <h4>Already have an account? </h4>
-          <h4 id="login"> Login here</h4>
+          <h4 id="login" onClick={switchToLogin}>
+            {" "}
+            Login here
+          </h4>
         </div>
       </div>
     </div>

@@ -61,13 +61,17 @@ function App() {
     };
   }, []);
 
+  const switchAccessLoginPage = (switchToLogin) => {
+    setAccessLoginPage(switchToLogin);
+  };
+
   return (
     <div className="app">
       {!user ? (
         accessLoginPage ? (
-          <Login />
+          <Login switchPage={switchAccessLoginPage} />
         ) : (
-          <Register />
+          <Register switchPage={switchAccessLoginPage} />
         )
       ) : (
         <div className="app_body">

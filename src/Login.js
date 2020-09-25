@@ -7,7 +7,7 @@ import { actionTypes } from "./reducer";
 import { useHistory } from "react-router-dom";
 import { Facebook } from "@material-ui/icons";
 
-const Login = () => {
+const Login = ({ switchPage }) => {
   const [{}, dispatch] = useStateValue();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,18 +39,10 @@ const Login = () => {
       .catch((err) => console.log(err.message));
   };
 
-  const register = (event) => {
-    event.preventDefault();
-
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth) => {
-        // It successfully created a new user with email and password
-        if (auth) {
-          history.push("/");
-        }
-      })
-      .catch((err) => console.log(err));
+  const switchToRegister = () => {
+    setEmail("");
+    setPassword("");
+    switchPage(false);
   };
 
   return (
@@ -109,7 +101,7 @@ const Login = () => {
 
         <div className="login_footer">
           <h4>New User? </h4>
-          <h4 onClick={register} id="sign_up">
+          <h4 onClick={switchToRegister} id="sign_up">
             {" "}
             Sign up here
           </h4>
