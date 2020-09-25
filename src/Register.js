@@ -11,29 +11,31 @@ const Register = ({ switchPage }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userPic, setUserPic] = useState("");
   const history = useHistory();
 
   const handleRegistration = (event) => {
     event.preventDefault();
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth) => {
-        if (auth) {
-          dispatch({
-            type: actionTypes.SET_USER,
-            user: auth.user,
-          });
+    // auth
+    //   .createUserWithEmailAndPassword(email, password)
+    //   .then((auth) => {
+    //     if (auth) {
+    //       dispatch({
+    //         type: actionTypes.SET_USER,
+    //         user: auth.user,
+    //       });
 
-          auth.user.updateProfile({
-            displayName: name,
-          });
+    //       auth.user.updateProfile({
+    //         displayName: name,
+    //       });
 
-          console.log(auth.user);
-          // history.push('/')
-        }
-      })
-      .catch((err) => console.log(err));
+    //       console.log(auth.user);
+    //       // history.push('/')
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
+    console.log(event.target.files);
   };
 
   const switchToLogin = () => {
@@ -43,16 +45,38 @@ const Register = ({ switchPage }) => {
     switchPage(true);
   };
 
+  const uploadUserPhoto = (event) => {
+    const { files } = event.target;
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const photo = e.target.result;
+        console.log("photo content", photo);
+        setUserPic(photo);
+      };
+      reader.readAsDataURL(files[0]);
+    }
+  };
+
   return (
     <div className="register">
       <div className="register_container">
-        <div className="register_icon_container">
-          <Avatar
-            src=""
-            alt="user profile pic"
-            className="register_container_photo"
-          />
-        </div>
+        <input
+          type="file"
+          accept="image/*"
+          id="user_photo"
+          onChange={uploadUserPhoto}
+          hidden
+        />
+        <label htmlFor="user_photo">
+          <div className="register_icon_container">
+            <Avatar
+              src={userPic}
+              alt="user profile pic"
+              className="register_container_photo"
+            />
+          </div>
+        </label>
         <form className="register_container_form">
           <h5>Username</h5>
           <input
