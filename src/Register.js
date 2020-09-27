@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, Button } from "@material-ui/core";
 import "./Register.css";
-import { auth, provider } from "./firebase";
+import { auth, provider, storage } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./reducer";
 import { useHistory } from "react-router-dom";
@@ -17,25 +17,25 @@ const Register = ({ switchPage }) => {
   const handleRegistration = (event) => {
     event.preventDefault();
 
-    // auth
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then((auth) => {
-    //     if (auth) {
-    //       dispatch({
-    //         type: actionTypes.SET_USER,
-    //         user: auth.user,
-    //       });
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((auth) => {
+        if (auth) {
+          dispatch({
+            type: actionTypes.SET_USER,
+            user: auth.user,
+          });
 
-    //       auth.user.updateProfile({
-    //         displayName: name,
-    //       });
+          auth.user.updateProfile({
+            displayName: name,
+            photoURL: setUserPic,
+          });
 
-    //       console.log(auth.user);
-    //       // history.push('/')
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
-    console.log(event.target.files);
+          console.log(auth.user);
+          // history.push('/')
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const switchToLogin = () => {
@@ -48,15 +48,17 @@ const Register = ({ switchPage }) => {
   const uploadUserPhoto = (event) => {
     const { files } = event.target;
     if (files && files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const photo = e.target.result;
-        console.log("photo content", photo);
-        setUserPic(photo);
-      };
-      reader.readAsDataURL(files[0]);
+      //   const reader = new FileReader();
+      //   reader.onload = (e) => {
+      //     const photo = e.target.result;
+      //     setUserPic(photo);
+      //   };
+      //   reader.readAsDataURL(files[0]);
+      setUserPic(files[0]);
     }
   };
+
+  console.log(userPic);
 
   return (
     <div className="register">
