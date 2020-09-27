@@ -95,7 +95,7 @@ const Chat = () => {
         {messages.map((message) => (
           <div
             className={`chat_body_message_container ${
-              message.id === user.uid && "chat_body_sender"
+              message?.id === user?.uid && "chat_body_sender"
             }`}
           >
             <Avatar src={message.picture} className={`chat_body_image`} />

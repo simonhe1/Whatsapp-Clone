@@ -12,12 +12,14 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./SidebarSettings.css";
 import { useStateValue } from "./StateProvider";
 import { auth } from "./firebase";
+import { useHistory } from "react-router-dom";
 
 const SidebarSettings = () => {
   const [{ user }, dispatch] = useStateValue();
 
   const [showSettings, setShowSettings] = useState(false);
   const anchorRef = useRef(null);
+  const history = useHistory();
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -28,7 +30,9 @@ const SidebarSettings = () => {
 
   const handleSignOut = () => {
     if (user) {
-      auth.signOut();
+      auth.signOut().then(() => {
+        history.push("/");
+      });
     }
   };
 

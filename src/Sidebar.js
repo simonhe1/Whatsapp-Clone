@@ -29,8 +29,6 @@ const Sidebar = () => {
     });
   }, []);
 
-  console.log(user);
-
   return (
     <div className="sidebar">
       <div className="sidebar_header">

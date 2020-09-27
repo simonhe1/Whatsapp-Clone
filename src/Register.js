@@ -41,28 +41,37 @@ const Register = ({ switchPage }) => {
                   .child(userPic.name)
                   .getDownloadURL()
                   .then((url) => {
-                    auth.user.updateProfile({
-                      displayName: name,
-                      photoURL: url,
-                    });
-                    console.log("updated profile with new photo");
+                    auth.user
+                      .updateProfile({
+                        displayName: name,
+                        photoURL: url,
+                      })
+                      .then(() => {
+                        dispatch({
+                          type: actionTypes.SET_USER,
+                          user: auth.user,
+                        });
+                        history.push("/");
+                      });
                   });
               }
             );
           } else {
-            auth.user.updateProfile({
-              displayName: name,
-              photoURL: `https://avatars.dicebear.com/api/human/${Math.floor(
-                Math.random() * 5000
-              )}.svg`,
-            });
+            auth.user
+              .updateProfile({
+                displayName: name,
+                photoURL: `https://avatars.dicebear.com/api/human/${Math.floor(
+                  Math.random() * 5000
+                )}.svg`,
+              })
+              .then(() => {
+                dispatch({
+                  type: actionTypes.SET_USER,
+                  user: auth.user,
+                });
+                history.push("/");
+              });
           }
-
-          dispatch({
-            type: actionTypes.SET_USER,
-            user: auth.user,
-          });
-          history.push("/");
         }
       })
       .catch((err) => console.log(err));
