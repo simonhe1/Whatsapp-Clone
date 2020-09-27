@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { Facebook } from "@material-ui/icons";
 
 const Login = ({ switchPage }) => {
-  const [{}, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -42,7 +42,8 @@ const Login = ({ switchPage }) => {
   const switchToRegister = () => {
     setEmail("");
     setPassword("");
-    switchPage(false);
+    // switchPage(false);
+    history.push("/register");
   };
 
   return (

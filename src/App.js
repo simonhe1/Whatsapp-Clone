@@ -67,26 +67,22 @@ function App() {
 
   return (
     <div className="app">
-      {!user ? (
-        accessLoginPage ? (
-          <Login switchPage={switchAccessLoginPage} />
-        ) : (
-          <Register switchPage={switchAccessLoginPage} />
-        )
-      ) : (
-        <div className="app_body">
-          <Router>
-            <Sidebar />
-            <Switch>
-              <Route path="/rooms/:roomId">
-                <Chat />
-              </Route>
+      <div className="app_body">
+        <Router>
+          <Switch>
+            <Route path="/rooms/:roomId">
+              <Sidebar />
+              <Chat />
+            </Route>
 
-              <Route path="/"></Route>
-            </Switch>
-          </Router>
-        </div>
-      )}
+            <Route path="/register">
+              <Register />
+            </Route>
+
+            <Route path="/">{user ? <Sidebar /> : <Login />}</Route>
+          </Switch>
+        </Router>
+      </div>
     </div>
   );
 }

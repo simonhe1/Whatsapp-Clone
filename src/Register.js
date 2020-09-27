@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Button } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 import "./Register.css";
 import { auth, provider, storage } from "./firebase";
 import { useStateValue } from "./StateProvider";
@@ -7,7 +7,7 @@ import { actionTypes } from "./reducer";
 import { useHistory } from "react-router-dom";
 
 const Register = ({ switchPage }) => {
-  const [{}, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,18 +21,48 @@ const Register = ({ switchPage }) => {
       .createUserWithEmailAndPassword(email, password)
       .then((auth) => {
         if (auth) {
+          if (userPic) {
+            const uploadTask = storage
+              .ref(`images/${userPic.name}`)
+              .put(userPic);
+            uploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                console.log(
+                  Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                  )
+                );
+              },
+              (error) => console.log(error),
+              () => {
+                storage
+                  .ref("images")
+                  .child(userPic.name)
+                  .getDownloadURL()
+                  .then((url) => {
+                    auth.user.updateProfile({
+                      displayName: name,
+                      photoURL: url,
+                    });
+                    console.log("updated profile with new photo");
+                  });
+              }
+            );
+          } else {
+            auth.user.updateProfile({
+              displayName: name,
+              photoURL: `https://avatars.dicebear.com/api/human/${Math.floor(
+                Math.random() * 5000
+              )}.svg`,
+            });
+          }
+
           dispatch({
             type: actionTypes.SET_USER,
             user: auth.user,
           });
-
-          auth.user.updateProfile({
-            displayName: name,
-            photoURL: setUserPic,
-          });
-
-          console.log(auth.user);
-          // history.push('/')
+          history.push("/");
         }
       })
       .catch((err) => console.log(err));
@@ -42,23 +72,16 @@ const Register = ({ switchPage }) => {
     setName("");
     setEmail("");
     setPassword("");
-    switchPage(true);
+    // switchPage(true);
+    history.push("/");
   };
 
   const uploadUserPhoto = (event) => {
     const { files } = event.target;
     if (files && files[0]) {
-      //   const reader = new FileReader();
-      //   reader.onload = (e) => {
-      //     const photo = e.target.result;
-      //     setUserPic(photo);
-      //   };
-      //   reader.readAsDataURL(files[0]);
       setUserPic(files[0]);
     }
   };
-
-  console.log(userPic);
 
   return (
     <div className="register">
@@ -73,7 +96,7 @@ const Register = ({ switchPage }) => {
         <label htmlFor="user_photo">
           <div className="register_icon_container">
             <Avatar
-              src={userPic}
+              src={userPic ? URL.createObjectURL(userPic) : ""}
               alt="user profile pic"
               className="register_container_photo"
             />

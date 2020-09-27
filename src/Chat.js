@@ -8,7 +8,6 @@ import {
 import React, { useState, useEffect } from "react";
 import "./Chat.css";
 import MicIcon from "@material-ui/icons/Mic";
-// import axios from "./axios";
 import { useParams } from "react-router-dom";
 import db from "./firebase";
 import { useStateValue } from "./StateProvider";
@@ -49,13 +48,6 @@ const Chat = () => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
-    // await axios.post("/api/v1/messages/new", {
-    //   message: input,
-    //   name: "Simon He",
-    //   timestamp: new Date().toUTCString(),
-    //   received: false,
-    // });
     db.collection("rooms").doc(roomId).collection("messages").add({
       message: input,
       name: user.displayName,
@@ -106,7 +98,7 @@ const Chat = () => {
               message.id === user.uid && "chat_body_sender"
             }`}
           >
-            <Avatar src={user?.photoURL} className={`chat_body_image`} />
+            <Avatar src={message.picture} className={`chat_body_image`} />
             <p className={`chat_body_message`}>
               <span className="chat_body_name">{message.name}</span>
               {message.message}
