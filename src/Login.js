@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import "./Login.css";
-import { auth, provider } from "./firebase";
+import { auth, GoogleProvider, FBProvider } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./reducer";
 import { useHistory } from "react-router-dom";
 import { Facebook } from "@material-ui/icons";
 
-const Login = ({ switchPage }) => {
+const Login = () => {
   const [, dispatch] = useStateValue();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,14 +27,33 @@ const Login = ({ switchPage }) => {
       .catch((err) => console.log(err));
   };
 
+  const signInWithFacebook = () => {
+    auth
+      .signInWithPopup(FBProvider)
+      .then((auth) => {
+        if (auth) {
+          console.log(auth.user);
+          dispatch({
+            type: actionTypes.SET_USER,
+            user: auth.user,
+          });
+          history.push("/");
+        }
+      })
+      .catch((err) => console.log(err.message));
+  };
+
   const signInWithGoogle = () => {
     auth
-      .signInWithPopup(provider)
-      .then((result) => {
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: result.user,
-        });
+      .signInWithPopup(GoogleProvider)
+      .then((auth) => {
+        if (auth) {
+          dispatch({
+            type: actionTypes.SET_USER,
+            user: auth.user,
+          });
+          history.push("/");
+        }
       })
       .catch((err) => console.log(err.message));
   };
@@ -88,7 +107,7 @@ const Login = ({ switchPage }) => {
         </div>
 
         <div className="login_third_party_container">
-          <Button className="login_facebook">
+          <Button onClick={signInWithFacebook} className="login_facebook">
             <Facebook color="primary" />
           </Button>
           <Button onClick={signInWithGoogle} className="login_google">
