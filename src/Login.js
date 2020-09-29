@@ -20,6 +20,10 @@ const Login = () => {
       .signInWithEmailAndPassword(email, password)
       .then((auth) => {
         if (auth) {
+          dispatch({
+            type: actionTypes.SET_USER,
+            user: auth.user,
+          });
           history.push("/");
         }
       })
@@ -32,7 +36,6 @@ const Login = () => {
       .signInWithPopup(FBProvider)
       .then((auth) => {
         if (auth) {
-          console.log(auth.user);
           dispatch({
             type: actionTypes.SET_USER,
             user: auth.user,
