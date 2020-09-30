@@ -11,10 +11,8 @@
   border-right: 1px solid lightgray;
 }
 
-.sidebar_header_username {
-  flex: 0.6;
-  font-size: 32px;
-  font-weight: 600;
+.sidebar_header_photo:hover {
+  cursor: pointer;
 }
 
 .sidebar_header_right {
@@ -22,6 +20,12 @@
   align-items: center;
   justify-content: space-between;
   min-width: 10vw;
+}
+
+.sidebar_header_username {
+  flex: 0.6;
+  font-size: 32px;
+  font-weight: 600;
 }
 
 .sidebar_header_right > .MuiSvgIcon-root {

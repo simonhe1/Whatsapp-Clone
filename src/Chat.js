@@ -18,7 +18,7 @@ const Chat = () => {
   const [input, setInput] = useState([]);
   const [roomName, setRoomName] = useState("");
   const [messages, setMessages] = useState([]);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(25);
   const [seed, setSeed] = useState("");
   const { roomId } = useParams();
   const bottomOfChatRef = useRef();
@@ -70,6 +70,15 @@ const Chat = () => {
     document.body.scrollTop = offsetPosition; // For Safari
   };
 
+  // const loadMoreMessages = () => {
+  //   let element = document.getElementById("topScroll");
+  //   let headerOffset = 62;
+  //   let elementPosition = element.offsetTop;
+  //   let offsetPosition = elementPosition + headerOffset;
+  //   document.documentElement.scrollTop = offsetPosition;
+  //   document.body.scrollTop = offsetPosition; // For Safari
+  // }
+
   const sendMessage = async (e) => {
     e.preventDefault();
     db.collection("rooms").doc(roomId).collection("messages").add({
@@ -117,7 +126,7 @@ const Chat = () => {
       </div>
 
       <div className="chat_body">
-        <div ref={topOfChatRef}></div>
+        <div id="topScroll" ref={topOfChatRef}></div>
         {messages.map((message, key) => (
           <div
             key={key}

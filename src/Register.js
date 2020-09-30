@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Avatar } from "@material-ui/core";
 import "./Register.css";
-import { auth, provider, storage } from "./firebase";
+import { auth, storage } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./reducer";
 import { useHistory } from "react-router-dom";
 
-const Register = ({ switchPage }) => {
+const Register = () => {
   const [, dispatch] = useStateValue();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -81,7 +81,6 @@ const Register = ({ switchPage }) => {
     setName("");
     setEmail("");
     setPassword("");
-    // switchPage(true);
     history.push("/");
   };
 

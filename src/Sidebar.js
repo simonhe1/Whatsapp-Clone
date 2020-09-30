@@ -5,7 +5,8 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import { Avatar, IconButton } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
 import SidebarChat from "./SidebarChat";
-import db from "./firebase";
+import { actionTypes } from "./reducer";
+import db, { auth, storage } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import SidebarSettings from "./SidebarSettings";
 
@@ -29,10 +30,56 @@ const Sidebar = () => {
     });
   }, []);
 
+  const uploadUserPhoto = (event) => {
+    const { files } = event.target;
+    if (files && files[0]) {
+      const pic = files[0];
+      if (user) {
+        const uploadTask = storage.ref(`images/${pic.name}`).put(pic);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {},
+          (err) => console.log(err),
+          () => {
+            storage
+              .ref("images")
+              .child(pic.name)
+              .getDownloadURL()
+              .then((url) => {
+                auth.currentUser.updateProfile({
+                  photoURL: url,
+                });
+                // .then(() => {
+                //   dispatch({
+                //     type: actionTypes.SET_USER,
+                //     user: auth.user,
+                //   });
+                // })
+                // .catch((err) => console.log(err));
+              });
+          }
+        );
+      }
+    }
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar_header">
-        <Avatar src={user?.photoURL} />
+        <input
+          type="file"
+          accept="image/*"
+          id="user_photo"
+          onChange={uploadUserPhoto}
+          hidden
+        />
+        <label htmlFor="user_photo">
+          <Avatar
+            src={user?.photoURL}
+            className="sidebar_header_photo"
+            onClick={(e) => console.log("hello")}
+          />
+        </label>
         <div className="sidebar_header_username">{user?.displayName}</div>
         <div className="sidebar_header_right">
           <IconButton>
